@@ -1,3 +1,10 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
 .ojuju-heading {
     font-family: "Ojuju", sans-serif;
     font-optical-sizing: auto;
@@ -9,11 +16,13 @@ body {
     margin: auto;
     padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* Hero Section */
 .hero-section{
     justify-content: center;
+    position: relative;
 }
 .swiper {
     height: 100vh;
@@ -25,6 +34,7 @@ body {
     align-items: center;
     justify-content: center;
     color: #D8C3A5;
+    overflow: hidden;
 }
 
 /* Bakground image */
@@ -39,8 +49,7 @@ body {
 /* Overlay */
 .overlay {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
@@ -52,19 +61,22 @@ body {
     position: relative;
     z-index: 2;
     text-align: center;
+    max-width: 900px;
 }
 
 h1{
-    font-size: 70px;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.1;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 p{
-    font-size: 30px;
+    font-size: clamp(1rem, 2vw, 1.5rem );
+    line-height: 1.7;
 }
 
 .navbar {
-    position: absolute;
+    position: fixed;
     top: 20px;
     width: 90%;
     z-index: 10;
@@ -73,7 +85,7 @@ p{
     justify-content: space-between;
     justify-self: center;
     align-items: center;
-    padding: 20px 40px;
+    padding: clamp(1rem, 1.5vw, 4rem);
     background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -83,7 +95,7 @@ p{
 .logo {
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: clamp(0.2rem, 0.1vw, 1rem) !important;
 }
 
 .logo img {
@@ -102,7 +114,18 @@ p{
 .nav-links a {
     color: #D8C3A5;
     text-decoration: none;
-    margin: 30px;
+    margin: 0 35px;
     font-family: "Ojuju", sans-serif;
-    padding: 2vh;
+    padding: clamp(0.1rem, 1vw, 1rem);
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    transition: 0.3s ease;
+}
+.nav-links a:hover {
+    border-radius: 15px;
+    background: rgba(216,195,165,0.1);
+}
+.banner {
+    width: 100%;
+    height: 100vh;
+    background-color: #111111;
 }
