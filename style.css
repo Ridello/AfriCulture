@@ -96,12 +96,12 @@ p{
   display: flex !important;
   align-items: center !important;
   gap: clamp(0.2rem, 0.1vw, 1rem) !important;
+  margin-left: clamp(1rem, 3vw, 1.5rem);
 }
 
 .logo img {
   width: 40px !important;
   height: auto !important;
-  
 }
 
 .logo h3 {
@@ -123,6 +123,49 @@ p{
 .nav-links a:hover {
     border-radius: 15px;
     background: rgba(216,195,165,0.1);
+}
+
+.hero-btns {
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.5rem, 1vw, 1rem);
+    flex-wrap: wrap;
+}
+.hero-btns button {
+    margin-top: 20px;
+    padding: clamp(0.5rem, 1vw, 1rem) clamp(1rem, 2vw, 2rem);
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    background-color: #D8C3A5;
+    color: #111111;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.primary-button {
+    background-color: #D8C3A5;
+    color: #111111;
+}
+.primary-button:hover {
+    background-color: transparent !important;
+    color: #D8C3A5 !important;
+    border: 2px solid #D8C3A5 !important;
+}
+.primary-button:active{
+    opacity: 0.5;
+}
+
+.secondary-button {
+    background-color: transparent !important;
+    color: #D8C3A5 !important;
+    border: 2px solid #D8C3A5 !important;
+}
+.secondary-button:hover {
+    background: #D8C3A5 !important;
+    color: #111111 !important;
+}
+.secondary-button:active{
+    opacity: 0.5;
 }
 .banner {
     width: 100%;
