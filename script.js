@@ -42,10 +42,10 @@ swiper.on('slideChange', () => {
     animateSlide();
 });
 
-// 3. Ultra-Smooth Easing Physics Scroll Engine
+/* YOUR FORMER SCROLL ENGINE WITH THE FIXED NAVBAR SPACE BUFFER */
 document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
-    e.preventDefault();
+    e.preventDefault(); // Stops the sharp browser snap
 
     const targetId = this.getAttribute('href');
     const targetElement = document.querySelector(targetId);
@@ -57,9 +57,9 @@ document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
       const distance = targetPosition - startPosition;
       let startTime = null;
 
-      const duration = 1200; // Duration of glide (1.2 seconds)
+      const duration = 1200; // Original duration speed (1.2 seconds)
 
-      // Mathematical Easing Function (Slow deceleration break)
+      // Mathematical Easing Function (Slow deceleration break curve)
       function easeInOutCubic(t, b, c, d) {
         t /= d/2;
         if (t < 1) return c/2*t*t*t + b;

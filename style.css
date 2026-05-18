@@ -167,8 +167,29 @@ p{
 .secondary-button:active{
     opacity: 0.5;
 }
-.banner {
+.about-section {
+    position: relative;
     width: 100%;
     height: 100vh;
     background-color: #111111;
+    overflow: hidden;
+}
+.about-blur {
+    position: absolute;
+    width: clamp(200px, 30vw, 400px );
+    height: clamp(200px, 30vw, 400px);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    z-index: 0;
+}
+.blur-1{
+    top: 10%;
+    left: clamp(10px, 10vw, 50px);
+    background: #D8C3A5;
+}
+.blur-2{
+    top: 10%;
+    right: clamp(10px, 10vw, 50px);
+    background: #C96B2C;
 }
