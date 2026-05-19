@@ -263,6 +263,69 @@ gsap.fromTo(
         }
     }
 );
+gsap.fromTo(
+    ".community-text",
+    {
+        y: 50,
+        opacity: 0
+    },
+    {
+        y: 0,
+        opacity: 1,
+
+        stagger: 0.15,
+
+        scrollTrigger:{
+            trigger: ".community-text",
+            start: "top 90%",
+            end: "top 50%",
+
+            scrub: 1
+        }
+    }
+);
+gsap.fromTo(
+    ".community-stats",
+    {
+        y: 50,
+        opacity: 0
+    },
+    {
+        y: 0,
+        opacity: 1,
+
+        stagger: 0.15,
+
+        scrollTrigger:{
+            trigger: ".community-stats",
+            start: "top 90%",
+            end: "top 50%",
+
+            scrub: 1
+        }
+    }
+);
+gsap.fromTo(
+    ".about-cta",
+    {
+        y: 50,
+        opacity: 0
+    },
+    {
+        y: 0,
+        opacity: 1,
+
+        stagger: 0.15,
+
+        scrollTrigger:{
+            trigger: ".about-cta",
+            start: "top 90%",
+            end: "top 50%",
+
+            scrub: 1
+        }
+    }
+);
 
 /* =========================
         BLUR GLOW MOTION

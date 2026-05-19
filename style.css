@@ -171,7 +171,7 @@ p{
 /* ABOUT SECTION */ 
 .about-section {
     position: relative;
-    padding: 120px 8%;
+    padding: 95px 8%;
     background-color: #111111;
     overflow: hidden;
 }
@@ -251,7 +251,6 @@ p{
     grid-template-columns: repeat(3,1fr);
     gap: 30px;
     margin-bottom: 140px;
-    background: #111111;
     height: 50vh;
     margin-bottom: 260px;
 }
@@ -386,30 +385,180 @@ p{
     cursor: pointer;
     transition: 0.3s ease;
 }
-.pri-button {
+.pri-btn {
     background-color: #D8C3A5;
     color: #111111;
 }
-.pri-button:hover {
+.pri-btn:hover {
     background-color: transparent !important;
     color: #D8C3A5 !important;
     border: 2px solid #D8C3A5 !important;
 }
-.pri-button:active{
+.pri-btn:active{
     opacity: 0.5;
 }
 
-.sec-button {
+.sec-btn {
     background-color: transparent !important;
     color: #D8C3A5 !important;
     border: 2px solid #D8C3A5 !important;
 }
-.sec-button:hover {
+.sec-btn:hover {
     background: #D8C3A5 !important;
     color: #111111 !important;
 }
-.sec-button:active{
+.sec-btn:active{
     opacity: 0.5;
+}
+
+/* =========================
+        GALLERY SECTION
+========================= */
+
+.gallery-section{
+    position: relative;
+
+    padding: 140px 0;
+
+    overflow: hidden;
+
+    background: #0d0d0d;
+}
+
+/* HEADING */
+.gallery-heading{
+    text-align: center;
+    margin-bottom: 90px;
+    padding: 0 6%;
+}
+
+.gallery-heading h2{
+    font-size: clamp(2.5rem,5vw,5rem);
+    color: #D8C3A5;
+    margin-bottom: 20px;
+}
+
+.gallery-heading p{
+    max-width: 700px;
+    margin: auto;
+}
+
+/* =========================
+        MARQUEE WRAPPER
+========================= */
+
+.gallery-marquee{
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    margin-bottom: 40px;
+}
+
+/* CURVED FEEL */
+.marquee-left{
+    transform: rotate(-2deg);
+}
+
+.marquee-right{
+    transform: rotate(2deg);
+}
+
+/* =========================
+        TRACK
+========================= */
+
+.gallery-track{
+    display: flex;
+    gap: 30px;
+
+    width: max-content;
+
+    animation: scrollLeft 35s linear infinite;
+}
+
+/* REVERSE */
+.reverse-track{
+    animation: scrollRight 35s linear infinite;
+}
+
+/* =========================
+        CARD
+========================= */
+
+.gallery-card{
+    position: relative;
+
+    width: 320px;
+    height: 420px;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    flex-shrink: 0;
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+
+/* IMAGE */
+.gallery-card img{
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: 0.5s ease;
+}
+
+/* HOVER */
+.gallery-card:hover img{
+    transform: scale(1.08);
+    filter: brightness(0.8);
+}
+
+/* =========================
+        ANIMATIONS
+========================= */
+
+@keyframes scrollLeft{
+
+    from{
+        transform: translateX(0);
+    }
+
+    to{
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scrollRight{
+
+    from{
+        transform: translateX(-50%);
+    }
+
+    to{
+        transform: translateX(0);
+    }
+}
+
+/* =========================
+        MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .gallery-card{
+        width: 240px;
+        height: 320px;
+    }
+
+    .gallery-track{
+        gap: 20px;
+    }
 }
 
 /* RESPONSIVE */
