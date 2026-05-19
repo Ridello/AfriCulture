@@ -12,8 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ojuju:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Questrial&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://jsdelivr.net" />
     <script src="https://jsdelivr.net"></script>
-    <script src="https://cloudflare.com"></script>
     <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 </head>
 <body>
     <!---Hero Section--->
@@ -98,12 +98,12 @@
         <!---INTRO BLOCK--->
         <div class="about-intro">
             <!---LEFT IMAGE--->
-            <div class="about-image">
-                <img src="" alt="about">
+            <div class="about-image ">
+                <img src="images/afripic2-copy.jpg" alt="about">
             </div>
 
             <!---RIGHT CONTENT--->
-            <div class="about-text">
+            <div class="about-text ">
                 <span class="section-tag">ABOUT AfriCulture</span>
                 <h2>Rooted in Culture <br>Designed for the future</h2>
                 <p>
@@ -120,31 +120,121 @@
                 </p>
             </div>
         </div>
-    </section>
-            <div class="card-section">
-            <div class="cards">
-                <div class="card">
-                    <img src="images/card1.jpg" alt="Card Image 1">
-                    <h3>Our Mission</h3>
-                    <p>Discover our commitment to preserving and promoting African cultures.</p>
-                </div>
-                <div class="card">
-                    <img src="images/card2.jpg" alt="Card Image 2">
-                    <h3>Our Values</h3>
-                    <p>Learn about the principles that guide our work.</p>
-                </div>
-                <div class="card">
-                    <img src="images/card3.jpg" alt="Card Image 3">
-                    <h3>Our Team</h3>
-                    <p>Meet the passionate individuals behind AfriCulture.</p>
-                </div>
+
+
+        <div class="values-section" id="">
+            <h3 class="values-head">Our Core Values</h3>
+            <!--- CARDS --->
+            <div class="value-card ">
+                <h3 class="ojuju-heading">
+                    Culture
+                </h3>
+                <p>
+                    Celebrating authentic African heritage
+                    through fashion, art, and storytelling.
+                </p>
+            </div>
+            <div class="value-card">
+                <h3 class="ojuju-heading">
+                    Creativity
+                </h3>
+                <p>
+                    Blending tradition with modern expression
+                    to inspire a new generation.
+                </p>
+            </div>
+                    <div class="value-card">
+                <h3 class="ojuju-heading">
+                    Identity
+                </h3>
+                <p>
+                    Giving African voices a bold and premium
+                    presence across the world.
+                </p>
             </div>
         </div>
+
+        <!-- QUOTE -->
+        <div class="quote-section">
+
+            <h2 class="ojuju-heading">
+                “Africa is not a trend.
+                <br>
+                It is timeless.”
+            </h2>
+
+        </div>
+
+        <!-- COMMUNITY -->
+        <div class="community-section">
+
+            <div class="community-text">
+
+                <span class="section-tag">
+                    COMMUNITY
+                </span>
+
+                <h2 class="ojuju-heading">
+                    A Movement Beyond Fashion
+                </h2>
+
+                <p class="ojuju-heading">
+                    Africulture exists to connect creatives,
+                    storytellers, artists, and dreamers who
+                    believe in the beauty of African culture.
+                </p>
+
+            </div>
+
+            <!-- STATS -->
+            <div class="community-stats">
+
+                <div class="stat-box">
+                    <h3>10K+</h3>
+                    <span>Community</span>
+                </div>
+
+                <div class="stat-box">
+                    <h3>20+</h3>
+                    <span>Countries Reached</span>
+                </div>
+
+                <div class="stat-box">
+                    <h3>100%</h3>
+                    <span>Afrocentric Vision</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="about-cta">
+
+            <h2 class="ojuju-heading">
+                Join the movement redefining African culture.
+            </h2>
+
+            <div class="join-btns">
+
+                <button class="pri-btn">
+                    Explore Gallery
+                </button>
+
+                <button class="sec-btn">
+                    Join Community
+                </button>
+
+            </div>
+
         </div>
     </section>
 
     <!---Swiper JS--->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- 2. ADD THIS LINE RIGHT HERE: ScrollTrigger Plugin -->
+    <script src="https://cloudflare.com"></script>
 
     <!---GSAP--->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
