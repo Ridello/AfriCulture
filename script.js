@@ -327,6 +327,63 @@ gsap.fromTo(
     }
 );
 
+gsap.fromTo (
+    "gallery-heading",
+    {
+        y: 50,
+        opacity: 0
+    },
+    {
+        y: 0,
+        opacity: 1,
+        stagger: 0.15,
+        scrollTrigger: {
+            trigger: ".gallery-heading",
+            start: "top 90%", 
+            end: "top 50%",
+            scrub: 1
+        }
+    }
+);
+
+gsap.fromTo(
+    "contact-info",
+    {
+        y: 50,
+        opacity: 0,
+    },
+    {
+        y: 0,
+        opacity: 1,
+        stagger: 0.15,
+        scrollTrigger: {
+            trigger: ".contact-info",
+            start: "top 90%",
+            end: "top 50%",
+            scrub: 1
+        }
+    }
+);
+
+gsap.fromTo(
+    "contact-form",
+    {
+        y: 50,
+        opacity: 0,
+    },
+    {
+        y: 0,
+        opacity: 1,
+        stagger: 0.15,
+        scrollTrigger: {
+            trigger: ".contact-form",
+            start: "top 90%",
+            end: "top 50%",
+            scrub: 1
+        }
+    }
+);
+
 /* =========================
         BLUR GLOW MOTION
 ========================= */
