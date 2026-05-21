@@ -416,3 +416,36 @@ document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+
+/* =========================
+        MOBILE MENU
+========================= */
+
+const menuToggle =
+    document.querySelector(".menu-toggle");
+
+const mobileMenu =
+    document.querySelector(".mobile-menu");
+
+/* TOGGLE MENU */
+
+menuToggle.addEventListener("click", () => {
+
+    menuToggle.classList.toggle("active");
+
+    mobileMenu.classList.toggle("active");
+});
+
+/* CLOSE MENU WHEN LINK CLICKED */
+
+document.querySelectorAll(".mobile-menu a")
+.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        mobileMenu.classList.remove("active");
+
+        menuToggle.classList.remove("active");
+    });
+});

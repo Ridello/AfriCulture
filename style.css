@@ -123,6 +123,7 @@ p{
 .nav-links a:hover {
     border-radius: 15px;
     background: rgba(216,195,165,0.1);
+    color: #D4AF37;
 }
 
 .hero-btns {
@@ -166,6 +167,133 @@ p{
 }
 .secondary-button:active{
     opacity: 0.5;
+}
+
+/* =========================
+        MENU BUTTON
+========================= */
+
+.menu-toggle{
+    width: 50px;
+    height: 50px;
+
+    display: none;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 6px;
+
+    cursor: pointer;
+
+    border-radius: 12px;
+
+    transition: 0.3s ease;
+}
+
+.menu-toggle:hover{
+    background: rgba(255,255,255,0.05);
+}
+
+.menu-toggle span{
+    width: 26px;
+    height: 2px;
+
+    background: #D8C3A5;
+
+    border-radius: 20px;
+
+    transition: 0.4s ease;
+}
+
+/* =========================
+        MOBILE MENU
+========================= */
+
+.mobile-menu{
+    position: fixed;
+
+    top: 100px;
+    right: -100%;
+
+    width: 280px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding: 24px;
+
+    background: rgba(0,0,0,0.7);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    border-radius: 24px;
+
+    z-index: 9998;
+
+    transition: 0.5s ease;
+}
+
+/* ACTIVE MENU */
+.mobile-menu.active{
+    right: 4%;
+}
+
+/* MOBILE LINKS */
+.mobile-menu a{
+    text-decoration: none;
+
+    color: #D8C3A5;
+
+    font-family: "Poppins", sans-serif;
+
+    padding: 16px 18px;
+
+    border-radius: 14px;
+
+    transition: 0.3s ease;
+}
+
+.mobile-menu a:hover{
+    background: rgba(255,255,255,0.06);
+    color: #ffffff;
+}
+
+/* =========================
+        ANIMATED MENU ICON
+========================= */
+
+.menu-toggle.active span:nth-child(1){
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2){
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3){
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* =========================
+        MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .nav-links{
+        display: none;
+    }
+
+    .menu-toggle{
+        display: flex;
+    }
 }
 
 /* ABOUT SECTION */ 
@@ -545,6 +673,177 @@ p{
     }
 }
 
+/* =========================
+        CONTACT
+========================= */
+
+.contact-section{
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 80px;
+
+    padding: 140px 8%;
+
+    background: #111111;
+}
+
+/* LEFT */
+.contact-info h2{
+    font-size: clamp(2.5rem,5vw,4.5rem);
+    color: #D8C3A5;
+    margin-bottom: 24px;
+}
+
+.contact-info p{
+    color: white;
+}
+
+.contact-details{
+    margin-top: 40px;
+}
+
+.contact-item{
+    margin-bottom: 30px;
+}
+
+.contact-item h4{
+    color: #D4AF37;
+    margin-bottom: 8px;
+    font-family: "Poppins", sans-serif;
+}
+
+.contact-item span{
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+}
+
+/* FORM */
+.contact-form-wrapper{
+    background: rgba(255,255,255,0.03);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    padding: 40px;
+
+    border-radius: 24px;
+
+    backdrop-filter: blur(12px);
+}
+
+.contact-form{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.contact-form input,
+.contact-form textarea{
+    width: 100%;
+
+    padding: 18px 20px;
+
+    background: rgba(255,255,255,0.04);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    border-radius: 14px;
+
+    outline: none;
+
+    color: #ffffff;
+
+    font-family: "Poppins", sans-serif;
+}
+
+.contact-form textarea{
+    resize: none;
+}
+
+.contact-form button{
+    width: fit-content;
+    padding: 12px 30px;
+    background-color: #D8C3A5;
+    color: #111111;     
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* =========================
+        FOOTER
+========================= */
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 40px;
+
+    padding: 50px 8%;
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    background: #0d0d0d;
+}
+
+.footer-left h2{
+    color: #D8C3A5;
+    margin-bottom: 10px;
+}
+
+.footer-left p{
+    max-width: 350px;
+    margin: 0;
+    color: #ffffff;
+}
+
+.footer-links,
+.footer-socials{
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a,
+.footer-socials a{
+    color: #D8C3A5;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+
+    transition: 0.3s ease;
+}
+
+.footer-links a:hover,
+.footer-socials a:hover{
+    color: #D4AF37;
+}
+
+/* =========================
+        MOBILE
+========================= */
+
+@media(max-width: 992px){
+
+    .contact-section{
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-card{
+        width: 280px;
+        height: 380px;
+    }
+
+    .footer{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
 /* =========================
         MOBILE
 ========================= */
