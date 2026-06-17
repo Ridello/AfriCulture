@@ -1,0 +1,1765 @@
+/* =================================================================
+   AFRICULTURE — AUTH PAGE
+   Luxury editorial sliding login/register system
+   ================================================================= */
+
+:root {
+  /* ---- Brand tokens (locked to AFRICULTURE system) ---- */
+  --gold:        #D4AF37;
+  --gold-soft:   #e3c768;
+  --gold-deep:   #a8862a;
+  --beige:       #D8C3A5;
+  --bg-dark:     #111111;
+  --bg-darker:   #0d0d0d;
+  --text:        #ffffff;
+  --text-muted:  rgba(255, 255, 255, 0.62);
+  --text-faint:  rgba(255, 255, 255, 0.38);
+
+  --card-bg:     #161513;
+  --card-line:   rgba(212, 175, 55, 0.16);
+  --field-bg:    rgba(255, 255, 255, 0.035);
+  --field-line:  rgba(255, 255, 255, 0.1);
+  --error:       #e2685a;
+  --success:     #6fbf8b;
+
+  /* ---- Type ---- */
+  --font-display: 'Ojuju', serif;
+  --font-body:    'Poppins', sans-serif;
+  --font-util:    'Montserrat', sans-serif;
+
+  /* ---- Motion ---- */
+  --ease-cinema: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft:   cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Layout ---- */
+  --promo-w: 440px;
+  --form-w: 560px;
+  --card-h: 620px;
+  --radius-card: 28px;
+}
+
+/* ---------------------------------------------------------------
+   Reset & base
+   --------------------------------------------------------------- */
+* { box-sizing: border-box; }
+html { -webkit-tap-highlight-color: transparent; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-dark);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+input { font-family: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Ambient backdrop
+   --------------------------------------------------------------- */
+.auth-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(212, 175, 55, 0.07), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(216, 195, 165, 0.05), transparent 60%),
+    var(--bg-darker);
+  overflow: hidden;
+}
+
+.auth-backdrop .glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+}
+.glow--gold {
+  width: 520px; height: 520px;
+  background: var(--gold);
+  top: -220px; left: -160px;
+  opacity: 0.12;
+}
+.glow--beige {
+  width: 480px; height: 480px;
+  background: var(--beige);
+  bottom: -220px; right: -140px;
+  opacity: 0.08;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ---------------------------------------------------------------
+   Brand mark
+   --------------------------------------------------------------- */
+.brand-mark {
+  position: fixed;
+  top: 32px;
+  left: 40px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-mark__text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  color: var(--text);
+}
+.brand-mark::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold);
+}
+
+/* ---------------------------------------------------------------
+   Stage / outer layout
+   --------------------------------------------------------------- */
+.auth-stage {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 110px 40px 60px;
+}
+
+/* ---------------------------------------------------------------
+   PROMO PANEL (left, desktop)
+   --------------------------------------------------------------- */
+.promo-panel {
+  position: relative;
+  width: var(--promo-w);
+  height: var(--card-h);
+  margin-right: -1px; /* sit flush against card */
+  border-radius: var(--radius-card) 0 0 var(--radius-card);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.promo-panel__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.promo-panel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transform: scale(1.06);
+}
+.promo-panel__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.35) 35%, rgba(13,13,13,0.92) 100%),
+    linear-gradient(100deg, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.15) 50%);
+}
+.promo-panel__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.promo-panel__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px 36px 42px;
+}
+
+.promo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-util);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-bottom: 18px;
+}
+.promo-eyebrow__line {
+  width: 22px;
+  height: 1px;
+  background: var(--gold-soft);
+}
+
+.promo-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 3vw, 2.6rem);
+  line-height: 1.08;
+  margin: 0 0 14px;
+  color: var(--text);
+}
+
+.promo-copy {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.78);
+  max-width: 340px;
+  margin: 0 0 30px;
+  font-weight: 300;
+}
+
+.promo-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.promo-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.promo-stat__num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--gold-soft);
+}
+.promo-stat__label {
+  font-family: var(--font-util);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.promo-stat__divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.14);
+}
+
+/* ---------------------------------------------------------------
+   FORM PANEL + CARD
+   --------------------------------------------------------------- */
+.form-panel {
+  position: relative;
+  width: var(--form-w);
+  height: var(--card-h);
+}
+
+.form-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--card-bg);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  border: 1px solid var(--card-line);
+  border-left: none;
+  overflow: hidden;
+  box-shadow:
+    0 40px 90px -30px rgba(0,0,0,0.65),
+    0 0 0 1px rgba(0,0,0,0.2);
+}
+
+/* both faces occupy the LEFT content zone of the card; the right
+   portion is reserved for the overlay's resting position */
+.form-face {
+  position: absolute;
+  inset: 0;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  z-index: 2;
+  transition: opacity 0.45s var(--ease-soft) 0.15s;
+}
+.form-face__inner {
+  width: 100%;
+  padding: 40px 16px 40px 44px;
+  overflow-y: auto;
+  max-height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-line) transparent;
+}
+.form-face__inner::-webkit-scrollbar { width: 5px; }
+.form-face__inner::-webkit-scrollbar-thumb { background: var(--card-line); border-radius: 3px; }
+
+.form-face--register {
+  left: 40%;
+  width: 60%;
+  opacity: 0;
+  pointer-events: none;
+}
+.form-face--register .form-face__inner { padding: 40px 44px 40px 16px; }
+.form-face--login { left: 0; }
+
+/* state class toggled by JS */
+.form-card.is-register .form-face--login   { opacity: 0; pointer-events: none; }
+.form-card.is-register .form-face--register { opacity: 1; pointer-events: auto; }
+
+.form-kicker {
+  display: block;
+  font-family: var(--font-util);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+
+.form-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 28px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------
+   Form fields
+   --------------------------------------------------------------- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field__label {
+  font-family: var(--font-util);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--field-bg);
+  border: 1px solid var(--field-line);
+  border-radius: 10px;
+  transition: border-color 0.3s var(--ease-soft), background 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+}
+
+.field__control:focus-within {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.045);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+}
+
+.field__icon {
+  width: 38px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  transition: color 0.3s var(--ease-soft);
+}
+.field__control:focus-within .field__icon { color: var(--gold); }
+
+.field__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.88rem;
+  padding: 13px 14px 13px 0;
+  min-width: 0;
+}
+.field__input::placeholder { color: var(--text-faint); }
+
+.field__toggle {
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  width: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: color 0.25s var(--ease-soft);
+}
+.field__toggle:hover { color: var(--gold); }
+
+.field__error {
+  display: none;
+  font-size: 0.72rem;
+  color: var(--error);
+  font-family: var(--font-util);
+}
+.field.is-invalid .field__control {
+  border-color: var(--error);
+}
+.field.is-invalid .field__error { display: block; }
+.field.is-invalid .field__icon { color: var(--error); }
+
+/* Password strength meter */
+.strength-meter {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+  height: 3px;
+}
+.strength-meter span {
+  flex: 1;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.08);
+  transition: background 0.35s var(--ease-soft);
+}
+.strength-meter.s-1 span:nth-child(1) { background: var(--error); }
+.strength-meter.s-2 span:nth-child(-n+2) { background: #d99a3f; }
+.strength-meter.s-3 span:nth-child(-n+3) { background: var(--gold); }
+.strength-meter.s-4 span:nth-child(-n+4) { background: var(--success); }
+
+/* Row helpers */
+.form-row { display: flex; align-items: center; }
+.form-row--between { justify-content: space-between; }
+
+/* Checkbox */
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  user-select: none;
+}
+.checkbox input { position: absolute; opacity: 0; width: 0; height: 0; }
+.checkbox__box {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  border: 1px solid var(--field-line);
+  background: var(--field-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s var(--ease-soft);
+}
+.checkbox__box i {
+  font-size: 9px;
+  color: var(--bg-dark);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s var(--ease-soft);
+}
+.checkbox input:checked + .checkbox__box {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.checkbox input:checked + .checkbox__box i { opacity: 1; transform: scale(1); }
+.checkbox__label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.checkbox__label a { color: var(--gold-soft); text-decoration: underline; text-decoration-color: rgba(212,175,55,0.35); }
+.checkbox--terms { align-items: flex-start; margin-top: -2px; }
+.checkbox--terms .checkbox__box { margin-top: 1px; }
+
+.form-link {
+  font-size: 0.78rem;
+  color: var(--gold-soft);
+  font-family: var(--font-util);
+  position: relative;
+}
+.form-link--quiet { color: var(--text-muted); }
+.form-link--quiet:hover { color: var(--gold-soft); }
+
+/* ---------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------- */
+.btn {
+  position: relative;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-util);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 15px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-soft), box-shadow 0.35s var(--ease-soft), background 0.35s var(--ease-soft);
+}
+.btn:active { transform: scale(0.97); }
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+  color: var(--bg-dark);
+  box-shadow: 0 10px 30px -8px rgba(212, 175, 55, 0.45);
+  margin-top: 4px;
+}
+.btn--primary:hover {
+  box-shadow: 0 14px 36px -8px rgba(212, 175, 55, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn--primary.is-loading .btn__label { opacity: 0; }
+.btn--primary.is-loading { pointer-events: none; }
+.btn__spinner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(13,13,13,0.25);
+  border-top-color: var(--bg-dark);
+  opacity: 0;
+  animation: spin 0.7s linear infinite;
+}
+.btn--primary.is-loading .btn__spinner { opacity: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid rgba(255,255,255,0.55);
+  padding: 14px 30px;
+}
+.btn--ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--text);
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 6px 0 2px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+}
+.divider span {
+  font-family: var(--font-util);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+/* Social row */
+.social-row {
+  display: flex;
+  gap: 12px;
+}
+.social-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--field-bg);
+  border: 1px solid var(--field-line);
+  color: var(--text-muted);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-soft);
+}
+.social-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,175,55,0.06);
+  transform: translateY(-2px);
+}
+
+.form-switch-text {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 6px 0 0;
+}
+.form-switch-link {
+  background: none;
+  border: none;
+  color: var(--gold-soft);
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-left: 4px;
+  text-decoration: underline;
+  text-decoration-color: rgba(212,175,55,0.35);
+}
+
+.form-switch-text--mobile { display: none; }
+
+/* ---------------------------------------------------------------
+   SLIDING OVERLAY — the signature element
+   A gold-to-beige curved panel that travels across the card,
+   mirroring the reference sliding-auth mechanic. At rest it
+   covers the right-hand zone (under the register form); in
+   register mode it slides to cover the left-hand zone instead.
+   --------------------------------------------------------------- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 60%;
+  width: 40%;
+  height: 100%;
+  z-index: 5;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--gold-deep) 0%, var(--gold) 48%, var(--beige) 100%);
+  transition: left 0.85s var(--ease-cinema), border-radius 0.85s var(--ease-cinema);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  box-shadow: -40px 0 70px -25px rgba(0,0,0,0.4);
+}
+
+/* curved "bite" out of the inner edge — built as a pseudo-element
+   so the card behind shows through the bulge cleanly */
+.overlay::before {
+  content: '';
+  position: absolute;
+  top: -6%;
+  left: -38%;
+  width: 76%;
+  height: 112%;
+  background: inherit;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* texture for a less "flat color" premium feel */
+.overlay__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.overlay__sheen {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 20%, rgba(255,255,255,0.22), transparent 55%);
+  pointer-events: none;
+}
+
+.overlay__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.overlay__pane {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 50px 38px;
+  text-align: left;
+  opacity: 1;
+  transition: opacity 0.5s var(--ease-soft) 0.2s;
+}
+
+.overlay__kicker {
+  font-family: var(--font-util);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(13,13,13,0.6);
+  margin-bottom: 10px;
+}
+
+.overlay__title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.14;
+  color: var(--bg-dark);
+  margin: 0 0 14px;
+}
+
+.overlay__copy {
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: rgba(13,13,13,0.72);
+  margin: 0 0 26px;
+  max-width: 260px;
+  font-weight: 400;
+}
+
+.overlay .btn--ghost {
+  border-color: rgba(13,13,13,0.45);
+  color: var(--bg-dark);
+}
+.overlay .btn--ghost:hover {
+  background: rgba(13,13,13,0.08);
+  border-color: var(--bg-dark);
+}
+
+/* the two panes stack side by side inside the track; only one is
+   shown at rest, the other fades in once the overlay finishes
+   sliding (toggled via the .is-register state below) */
+.overlay__pane--left  { position: absolute; inset: 0; }
+.overlay__pane--right { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.form-card.is-register .overlay__pane--left { pointer-events: none; }
+.form-card.is-register .overlay__pane--right { pointer-events: auto; }
+
+/* ---- STATE: register mode ---- */
+.form-card.is-register .overlay {
+  left: 0;
+  border-radius: var(--radius-card) 0 0 var(--radius-card);
+  box-shadow: 40px 0 70px -25px rgba(0,0,0,0.4);
+}
+.form-card.is-register .overlay::before {
+  left: auto;
+  right: -38%;
+}
+.form-card.is-register .overlay__pane--left  { opacity: 0; }
+.form-card.is-register .overlay__pane--right { opacity: 1; }
+.form-card:not(.is-register) .overlay__pane--left  { opacity: 1; }
+.form-card:not(.is-register) .overlay__pane--right { opacity: 0; }
+
+/* ---------------------------------------------------------------
+   Toast
+   --------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: 14px;
+  padding: 16px 22px;
+  box-shadow: 0 20px 50px -15px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-soft), transform 0.4s var(--ease-soft);
+  max-width: 90vw;
+}
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.toast__icon {
+  font-size: 1.3rem;
+  color: var(--success);
+  flex-shrink: 0;
+}
+.toast__text { display: flex; flex-direction: column; gap: 1px; }
+.toast__text strong { font-size: 0.85rem; font-family: var(--font-util); }
+.toast__text span { font-size: 0.76rem; color: var(--text-muted); }
+
+/* ---------------------------------------------------------------
+   Responsive — Tablet
+   --------------------------------------------------------------- */
+@media (max-width: 980px) {
+  :root { --card-h: 580px; }
+  .auth-stage { padding: 100px 24px 50px; }
+  .promo-panel { width: 320px; }
+  .form-panel { width: 420px; }
+  .promo-heading { font-size: 1.9rem; }
+  .promo-stats { gap: 10px; }
+  .promo-stat__label { font-size: 0.58rem; }
+}
+
+@media (max-width: 860px) {
+  .promo-panel { display: none; }
+  .form-panel { width: 440px; }
+  .form-card { border-radius: var(--radius-card); border-left: 1px solid var(--card-line); }
+}
+
+/* ---------------------------------------------------------------
+   Responsive — Mobile: single column, overlay becomes a
+   slide-up / slide-down CTA bar instead of a horizontal panel
+   --------------------------------------------------------------- */
+@media (max-width: 560px) {
+  :root { --radius-card: 22px; }
+
+  .brand-mark { top: 22px; left: 24px; }
+  .brand-mark__text { font-size: 0.92rem; }
+
+  .auth-stage {
+    padding: 86px 18px 40px;
+    align-items: flex-start;
+  }
+
+  .form-panel { width: 100%; max-width: 460px; height: auto; }
+
+  .form-card {
+    height: auto;
+    min-height: 0;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--card-line);
+    padding-bottom: 0;
+  }
+
+  .form-face {
+    position: relative;
+    inset: auto;
+    display: none;
+  }
+  .form-face--login { display: flex; }
+  .form-card.is-register .form-face--login { display: none; }
+  .form-card.is-register .form-face--register { display: flex; }
+
+  .form-face__inner {
+    padding: 38px 26px 30px;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .form-title { font-size: 1.6rem; }
+
+  /* Overlay is hidden on mobile; the inline "switch" links + */
+  /* mobile CTA strip below the form replace it entirely      */
+  .overlay { display: none; }
+
+  .form-switch-text--mobile {
+    display: block;
+    padding-top: 18px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+}
+
+@media (max-width: 360px) {
+  .form-face__inner { padding: 32px 20px 26px; }
+  .promo-stats { flex-wrap: wrap; row-gap: 10px; }
+}
+
+@media (max-width: 400px) {
+  .form-row--between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .field__input { font-size: 0.85rem; padding-right: 8px; }
+  .field__icon { width: 32px; font-size: 0.78rem; }
+}/* =================================================================
+   AFRICULTURE — AUTH PAGE
+   Luxury editorial sliding login/register system
+   ================================================================= */
+
+:root {
+  /* ---- Brand tokens (locked to AFRICULTURE system) ---- */
+  --gold:        #D4AF37;
+  --gold-soft:   #e3c768;
+  --gold-deep:   #a8862a;
+  --beige:       #D8C3A5;
+  --bg-dark:     #111111;
+  --bg-darker:   #0d0d0d;
+  --text:        #ffffff;
+  --text-muted:  rgba(255, 255, 255, 0.62);
+  --text-faint:  rgba(255, 255, 255, 0.38);
+
+  --card-bg:     #161513;
+  --card-line:   rgba(212, 175, 55, 0.16);
+  --field-bg:    rgba(255, 255, 255, 0.035);
+  --field-line:  rgba(255, 255, 255, 0.1);
+  --error:       #e2685a;
+  --success:     #6fbf8b;
+
+  /* ---- Type ---- */
+  --font-display: 'Ojuju', serif;
+  --font-body:    'Poppins', sans-serif;
+  --font-util:    'Montserrat', sans-serif;
+
+  /* ---- Motion ---- */
+  --ease-cinema: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft:   cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Layout ---- */
+  --promo-w: 440px;
+  --form-w: 560px;
+  --card-h: 620px;
+  --radius-card: 28px;
+}
+
+/* ---------------------------------------------------------------
+   Reset & base
+   --------------------------------------------------------------- */
+* { box-sizing: border-box; }
+html { -webkit-tap-highlight-color: transparent; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-dark);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+input { font-family: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Ambient backdrop
+   --------------------------------------------------------------- */
+.auth-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(212, 175, 55, 0.07), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(216, 195, 165, 0.05), transparent 60%),
+    var(--bg-darker);
+  overflow: hidden;
+}
+
+.auth-backdrop .glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+}
+.glow--gold {
+  width: 520px; height: 520px;
+  background: var(--gold);
+  top: -220px; left: -160px;
+  opacity: 0.12;
+}
+.glow--beige {
+  width: 480px; height: 480px;
+  background: var(--beige);
+  bottom: -220px; right: -140px;
+  opacity: 0.08;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ---------------------------------------------------------------
+   Brand mark
+   --------------------------------------------------------------- */
+.brand-mark {
+  position: fixed;
+  top: 32px;
+  left: 40px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-mark__text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  color: var(--text);
+}
+.brand-mark::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold);
+}
+
+/* ---------------------------------------------------------------
+   Stage / outer layout
+   --------------------------------------------------------------- */
+.auth-stage {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 110px 40px 60px;
+}
+
+/* ---------------------------------------------------------------
+   PROMO PANEL (left, desktop)
+   --------------------------------------------------------------- */
+.promo-panel {
+  position: relative;
+  width: var(--promo-w);
+  height: var(--card-h);
+  margin-right: -1px; /* sit flush against card */
+  border-radius: var(--radius-card) 0 0 var(--radius-card);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.promo-panel__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.promo-panel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transform: scale(1.06);
+}
+.promo-panel__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.35) 35%, rgba(13,13,13,0.92) 100%),
+    linear-gradient(100deg, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.15) 50%);
+}
+.promo-panel__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.promo-panel__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px 36px 42px;
+}
+
+.promo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-util);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-bottom: 18px;
+}
+.promo-eyebrow__line {
+  width: 22px;
+  height: 1px;
+  background: var(--gold-soft);
+}
+
+.promo-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 3vw, 2.6rem);
+  line-height: 1.08;
+  margin: 0 0 14px;
+  color: var(--text);
+}
+
+.promo-copy {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.78);
+  max-width: 340px;
+  margin: 0 0 30px;
+  font-weight: 300;
+}
+
+.promo-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.promo-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.promo-stat__num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--gold-soft);
+}
+.promo-stat__label {
+  font-family: var(--font-util);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.promo-stat__divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.14);
+}
+
+/* ---------------------------------------------------------------
+   FORM PANEL + CARD
+   --------------------------------------------------------------- */
+.form-panel {
+  position: relative;
+  width: var(--form-w);
+  height: var(--card-h);
+}
+
+.form-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--card-bg);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  border: 1px solid var(--card-line);
+  border-left: none;
+  overflow: hidden;
+  box-shadow:
+    0 40px 90px -30px rgba(0,0,0,0.65),
+    0 0 0 1px rgba(0,0,0,0.2);
+}
+
+/* both faces occupy the LEFT content zone of the card; the right
+   portion is reserved for the overlay's resting position */
+.form-face {
+  position: absolute;
+  inset: 0;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  z-index: 2;
+  transition: opacity 0.45s var(--ease-soft) 0.15s;
+}
+.form-face__inner {
+  width: 100%;
+  padding: 40px 16px 40px 44px;
+  overflow-y: auto;
+  max-height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-line) transparent;
+}
+.form-face__inner::-webkit-scrollbar { width: 5px; }
+.form-face__inner::-webkit-scrollbar-thumb { background: var(--card-line); border-radius: 3px; }
+
+.form-face--register {
+  left: 40%;
+  width: 60%;
+  opacity: 0;
+  pointer-events: none;
+}
+.form-face--register .form-face__inner { padding: 40px 44px 40px 16px; }
+.form-face--login { left: 0; }
+
+/* state class toggled by JS */
+.form-card.is-register .form-face--login   { opacity: 0; pointer-events: none; }
+.form-card.is-register .form-face--register { opacity: 1; pointer-events: auto; }
+
+.form-kicker {
+  display: block;
+  font-family: var(--font-util);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+
+.form-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 28px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------
+   Form fields
+   --------------------------------------------------------------- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field__label {
+  font-family: var(--font-util);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--field-bg);
+  border: 1px solid var(--field-line);
+  border-radius: 10px;
+  transition: border-color 0.3s var(--ease-soft), background 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+}
+
+.field__control:focus-within {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.045);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+}
+
+.field__icon {
+  width: 38px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  transition: color 0.3s var(--ease-soft);
+}
+.field__control:focus-within .field__icon { color: var(--gold); }
+
+.field__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.88rem;
+  padding: 13px 14px 13px 0;
+  min-width: 0;
+}
+.field__input::placeholder { color: var(--text-faint); }
+
+.field__toggle {
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  width: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: color 0.25s var(--ease-soft);
+}
+.field__toggle:hover { color: var(--gold); }
+
+.field__error {
+  display: none;
+  font-size: 0.72rem;
+  color: var(--error);
+  font-family: var(--font-util);
+}
+.field.is-invalid .field__control {
+  border-color: var(--error);
+}
+.field.is-invalid .field__error { display: block; }
+.field.is-invalid .field__icon { color: var(--error); }
+
+/* Password strength meter */
+.strength-meter {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+  height: 3px;
+}
+.strength-meter span {
+  flex: 1;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.08);
+  transition: background 0.35s var(--ease-soft);
+}
+.strength-meter.s-1 span:nth-child(1) { background: var(--error); }
+.strength-meter.s-2 span:nth-child(-n+2) { background: #d99a3f; }
+.strength-meter.s-3 span:nth-child(-n+3) { background: var(--gold); }
+.strength-meter.s-4 span:nth-child(-n+4) { background: var(--success); }
+
+/* Row helpers */
+.form-row { display: flex; align-items: center; }
+.form-row--between { justify-content: space-between; }
+
+/* Checkbox */
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  user-select: none;
+}
+.checkbox input { position: absolute; opacity: 0; width: 0; height: 0; }
+.checkbox__box {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  border: 1px solid var(--field-line);
+  background: var(--field-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s var(--ease-soft);
+}
+.checkbox__box i {
+  font-size: 9px;
+  color: var(--bg-dark);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s var(--ease-soft);
+}
+.checkbox input:checked + .checkbox__box {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.checkbox input:checked + .checkbox__box i { opacity: 1; transform: scale(1); }
+.checkbox__label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.checkbox__label a { color: var(--gold-soft); text-decoration: underline; text-decoration-color: rgba(212,175,55,0.35); }
+.checkbox--terms { align-items: flex-start; margin-top: -2px; }
+.checkbox--terms .checkbox__box { margin-top: 1px; }
+
+.form-link {
+  font-size: 0.78rem;
+  color: var(--gold-soft);
+  font-family: var(--font-util);
+  position: relative;
+}
+.form-link--quiet { color: var(--text-muted); }
+.form-link--quiet:hover { color: var(--gold-soft); }
+
+/* ---------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------- */
+.btn {
+  position: relative;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-util);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 15px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-soft), box-shadow 0.35s var(--ease-soft), background 0.35s var(--ease-soft);
+}
+.btn:active { transform: scale(0.97); }
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+  color: var(--bg-dark);
+  box-shadow: 0 10px 30px -8px rgba(212, 175, 55, 0.45);
+  margin-top: 4px;
+}
+.btn--primary:hover {
+  box-shadow: 0 14px 36px -8px rgba(212, 175, 55, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn--primary.is-loading .btn__label { opacity: 0; }
+.btn--primary.is-loading { pointer-events: none; }
+.btn__spinner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(13,13,13,0.25);
+  border-top-color: var(--bg-dark);
+  opacity: 0;
+  animation: spin 0.7s linear infinite;
+}
+.btn--primary.is-loading .btn__spinner { opacity: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid rgba(255,255,255,0.55);
+  padding: 14px 30px;
+}
+.btn--ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--text);
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 6px 0 2px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+}
+.divider span {
+  font-family: var(--font-util);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+/* Social row */
+.social-row {
+  display: flex;
+  gap: 12px;
+}
+.social-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--field-bg);
+  border: 1px solid var(--field-line);
+  color: var(--text-muted);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-soft);
+}
+.social-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,175,55,0.06);
+  transform: translateY(-2px);
+}
+
+.form-switch-text {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 6px 0 0;
+}
+.form-switch-link {
+  background: none;
+  border: none;
+  color: var(--gold-soft);
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-left: 4px;
+  text-decoration: underline;
+  text-decoration-color: rgba(212,175,55,0.35);
+}
+
+.form-switch-text--mobile { display: none; }
+
+/* ---------------------------------------------------------------
+   SLIDING OVERLAY — the signature element
+   A gold-to-beige curved panel that travels across the card,
+   mirroring the reference sliding-auth mechanic. At rest it
+   covers the right-hand zone (under the register form); in
+   register mode it slides to cover the left-hand zone instead.
+   --------------------------------------------------------------- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 60%;
+  width: 40%;
+  height: 100%;
+  z-index: 5;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--gold-deep) 0%, var(--gold) 48%, var(--beige) 100%);
+  transition: left 0.85s var(--ease-cinema), border-radius 0.85s var(--ease-cinema);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  box-shadow: -40px 0 70px -25px rgba(0,0,0,0.4);
+}
+
+/* curved "bite" out of the inner edge — built as a pseudo-element
+   so the card behind shows through the bulge cleanly */
+.overlay::before {
+  content: '';
+  position: absolute;
+  top: -6%;
+  left: -38%;
+  width: 76%;
+  height: 112%;
+  background: inherit;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* texture for a less "flat color" premium feel */
+.overlay__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.overlay__sheen {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 20%, rgba(255,255,255,0.22), transparent 55%);
+  pointer-events: none;
+}
+
+.overlay__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.overlay__pane {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 50px 38px;
+  text-align: left;
+  opacity: 1;
+  transition: opacity 0.5s var(--ease-soft) 0.2s;
+}
+
+.overlay__kicker {
+  font-family: var(--font-util);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(13,13,13,0.6);
+  margin-bottom: 10px;
+}
+
+.overlay__title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.14;
+  color: var(--bg-dark);
+  margin: 0 0 14px;
+}
+
+.overlay__copy {
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: rgba(13,13,13,0.72);
+  margin: 0 0 26px;
+  max-width: 260px;
+  font-weight: 400;
+}
+
+.overlay .btn--ghost {
+  border-color: rgba(13,13,13,0.45);
+  color: var(--bg-dark);
+}
+.overlay .btn--ghost:hover {
+  background: rgba(13,13,13,0.08);
+  border-color: var(--bg-dark);
+}
+
+/* the two panes stack side by side inside the track; only one is
+   shown at rest, the other fades in once the overlay finishes
+   sliding (toggled via the .is-register state below) */
+.overlay__pane--left  { position: absolute; inset: 0; }
+.overlay__pane--right { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.form-card.is-register .overlay__pane--left { pointer-events: none; }
+.form-card.is-register .overlay__pane--right { pointer-events: auto; }
+
+/* ---- STATE: register mode ---- */
+.form-card.is-register .overlay {
+  left: 0;
+  border-radius: var(--radius-card) 0 0 var(--radius-card);
+  box-shadow: 40px 0 70px -25px rgba(0,0,0,0.4);
+}
+.form-card.is-register .overlay::before {
+  left: auto;
+  right: -38%;
+}
+.form-card.is-register .overlay__pane--left  { opacity: 0; }
+.form-card.is-register .overlay__pane--right { opacity: 1; }
+.form-card:not(.is-register) .overlay__pane--left  { opacity: 1; }
+.form-card:not(.is-register) .overlay__pane--right { opacity: 0; }
+
+/* ---------------------------------------------------------------
+   Toast
+   --------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: 14px;
+  padding: 16px 22px;
+  box-shadow: 0 20px 50px -15px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-soft), transform 0.4s var(--ease-soft);
+  max-width: 90vw;
+}
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.toast__icon {
+  font-size: 1.3rem;
+  color: var(--success);
+  flex-shrink: 0;
+}
+.toast__text { display: flex; flex-direction: column; gap: 1px; }
+.toast__text strong { font-size: 0.85rem; font-family: var(--font-util); }
+.toast__text span { font-size: 0.76rem; color: var(--text-muted); }
+
+/* ---------------------------------------------------------------
+   Responsive — Tablet
+   --------------------------------------------------------------- */
+@media (max-width: 980px) {
+  :root { --card-h: 580px; }
+  .auth-stage { padding: 100px 24px 50px; }
+  .promo-panel { width: 320px; }
+  .form-panel { width: 420px; }
+  .promo-heading { font-size: 1.9rem; }
+  .promo-stats { gap: 10px; }
+  .promo-stat__label { font-size: 0.58rem; }
+}
+
+@media (max-width: 860px) {
+  .promo-panel { display: none; }
+  .form-panel { width: 440px; }
+  .form-card { border-radius: var(--radius-card); border-left: 1px solid var(--card-line); }
+}
+
+/* ---------------------------------------------------------------
+   Responsive — Mobile: single column, overlay becomes a
+   slide-up / slide-down CTA bar instead of a horizontal panel
+   --------------------------------------------------------------- */
+@media (max-width: 560px) {
+  :root { --radius-card: 22px; }
+
+  .brand-mark { top: 22px; left: 24px; }
+  .brand-mark__text { font-size: 0.92rem; }
+
+  .auth-stage {
+    padding: 86px 18px 40px;
+    align-items: flex-start;
+  }
+
+  .form-panel { width: 100%; max-width: 460px; height: auto; }
+
+  .form-card {
+    height: auto;
+    min-height: 0;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--card-line);
+    padding-bottom: 0;
+  }
+
+  .form-face {
+    position: relative;
+    inset: auto;
+    display: none;
+  }
+  .form-face--login { display: flex; }
+  .form-card.is-register .form-face--login { display: none; }
+  .form-card.is-register .form-face--register { display: flex; }
+
+  .form-face__inner {
+    padding: 38px 26px 30px;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .form-title { font-size: 1.6rem; }
+
+  /* Overlay is hidden on mobile; the inline "switch" links + */
+  /* mobile CTA strip below the form replace it entirely      */
+  .overlay { display: none; }
+
+  .form-switch-text--mobile {
+    display: block;
+    padding-top: 18px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+}
+
+@media (max-width: 360px) {
+  .form-face__inner { padding: 32px 20px 26px; }
+  .promo-stats { flex-wrap: wrap; row-gap: 10px; }
+}
+
+@media (max-width: 400px) {
+  .form-row--between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .field__input { font-size: 0.85rem; padding-right: 8px; }
+  .field__icon { width: 32px; font-size: 0.78rem; }
+}

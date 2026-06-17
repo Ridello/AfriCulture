@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFRICULTURE — Join the Movement</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Ojuju (Google Fonts) -->
+<link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<link rel="stylesheet" href="form.css">
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- BACKDROP — ambient texture layer                -->
+<!-- ============================================= -->
+<div class="auth-backdrop">
+  <div class="grain"></div>
+  <div class="glow glow--gold"></div>
+  <div class="glow glow--beige"></div>
+</div>
+
+<!-- ============================================= -->
+<!-- BRAND MARK — top left, always visible           -->
+<!-- ============================================= -->
+<a href="index.html" class="brand-mark">
+  <span class="brand-mark__text">AFRICULTURE</span>
+</a>
+
+<!-- ============================================= -->
+<!-- MAIN AUTH STAGE                                 -->
+<!-- ============================================= -->
+<main class="auth-stage" id="authStage">
+
+  <!-- ===================================== -->
+  <!-- PROMO PANEL — cultural imagery + copy   -->
+  <!-- ===================================== -->
+  <section class="promo-panel" aria-hidden="true">
+    <div class="promo-panel__media">
+      <img src="https://images.unsplash.com/photo-1583396353722-2fdfe7c0adfe?q=80&w=1400&auto=format&fit=crop" alt="" class="promo-panel__img">
+      <div class="promo-panel__scrim"></div>
+      <div class="promo-panel__grain"></div>
+    </div>
+
+    <div class="promo-panel__content">
+      <span class="promo-eyebrow">
+        <span class="promo-eyebrow__line"></span>
+        Africulture Collective
+      </span>
+
+      <h1 class="promo-heading" id="promoHeading">
+        Join the<br>Movement
+      </h1>
+
+      <p class="promo-copy" id="promoCopy">
+        Celebrate African creativity. Connect with stories, art,
+        and culture from a continent of makers, dreamers, and
+        storytellers.
+      </p>
+
+      <div class="promo-stats">
+        <div class="promo-stat">
+          <span class="promo-stat__num">12K+</span>
+          <span class="promo-stat__label">Creatives</span>
+        </div>
+        <div class="promo-stat__divider"></div>
+        <div class="promo-stat">
+          <span class="promo-stat__num">54</span>
+          <span class="promo-stat__label">Nations Represented</span>
+        </div>
+        <div class="promo-stat__divider"></div>
+        <div class="promo-stat">
+          <span class="promo-stat__num">2.3K</span>
+          <span class="promo-stat__label">Stories Shared</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- FORM PANEL — fixed card, two forms      -->
+  <!-- the overlay slides across this card     -->
+  <!-- ===================================== -->
+  <section class="form-panel">
+    <div class="form-card" id="formCard">
+
+      <!-- ---------- LOGIN FORM ---------- -->
+      <div class="form-face form-face--login" id="loginFace">
+        <div class="form-face__inner">
+          <span class="form-kicker">Welcome back</span>
+          <h2 class="form-title">Sign In</h2>
+          <p class="form-subtitle">Continue your journey through African stories and craft.</p>
+
+          <form class="auth-form" id="loginForm" novalidate>
+
+            <div class="field" data-field>
+              <label class="field__label" for="loginEmail">Email Address</label>
+              <div class="field__control">
+                <i class="fa-regular fa-envelope field__icon"></i>
+                <input class="field__input" type="email" id="loginEmail" name="email" placeholder="you@email.com" autocomplete="email" required>
+              </div>
+              <span class="field__error">Enter a valid email address</span>
+            </div>
+
+            <div class="field" data-field>
+              <label class="field__label" for="loginPassword">Password</label>
+              <div class="field__control">
+                <i class="fa-solid fa-lock field__icon"></i>
+                <input class="field__input" type="password" id="loginPassword" name="password" placeholder="••••••••" autocomplete="current-password" required minlength="6">
+                <button type="button" class="field__toggle" aria-label="Show password" data-toggle-password>
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+              <span class="field__error">Password must be at least 6 characters</span>
+            </div>
+
+            <div class="form-row form-row--between">
+              <label class="checkbox">
+                <input type="checkbox" name="remember">
+                <span class="checkbox__box"><i class="fa-solid fa-check"></i></span>
+                <span class="checkbox__label">Remember me</span>
+              </label>
+              <a href="#" class="form-link form-link--quiet">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn--primary">
+              <span class="btn__label">Sign In</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+            </button>
+
+            <div class="divider"><span>or continue with</span></div>
+
+            <div class="social-row">
+              <button type="button" class="social-btn" aria-label="Continue with Google"><i class="fa-brands fa-google"></i></button>
+              <button type="button" class="social-btn" aria-label="Continue with Apple"><i class="fa-brands fa-apple"></i></button>
+              <button type="button" class="social-btn" aria-label="Continue with Instagram"><i class="fa-brands fa-instagram"></i></button>
+            </div>
+
+            <p class="form-switch-text form-switch-text--mobile">
+              New to Africulture?
+              <button type="button" class="form-switch-link" data-switch="register">Create an account</button>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- ---------- REGISTER FORM ---------- -->
+      <div class="form-face form-face--register" id="registerFace">
+        <div class="form-face__inner">
+          <span class="form-kicker">Become a member</span>
+          <h2 class="form-title">Create Account</h2>
+          <p class="form-subtitle">Tell us a little about you to begin your story.</p>
+
+          <form class="auth-form" id="registerForm" novalidate>
+
+            <div class="field" data-field>
+              <label class="field__label" for="registerName">Full Name</label>
+              <div class="field__control">
+                <i class="fa-regular fa-user field__icon"></i>
+                <input class="field__input" type="text" id="registerName" name="fullname" placeholder="Adaeze Okafor" autocomplete="name" required minlength="2">
+              </div>
+              <span class="field__error">Enter your full name</span>
+            </div>
+
+            <div class="field" data-field>
+              <label class="field__label" for="registerEmail">Email Address</label>
+              <div class="field__control">
+                <i class="fa-regular fa-envelope field__icon"></i>
+                <input class="field__input" type="email" id="registerEmail" name="email" placeholder="you@email.com" autocomplete="email" required>
+              </div>
+              <span class="field__error">Enter a valid email address</span>
+            </div>
+
+            <div class="field" data-field>
+              <label class="field__label" for="registerPassword">Password</label>
+              <div class="field__control">
+                <i class="fa-solid fa-lock field__icon"></i>
+                <input class="field__input" type="password" id="registerPassword" name="password" placeholder="••••••••" autocomplete="new-password" required minlength="6">
+                <button type="button" class="field__toggle" aria-label="Show password" data-toggle-password>
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+              <div class="strength-meter" data-strength-meter>
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <span class="field__error">Password must be at least 6 characters</span>
+            </div>
+
+            <div class="field" data-field>
+              <label class="field__label" for="registerConfirm">Confirm Password</label>
+              <div class="field__control">
+                <i class="fa-solid fa-lock field__icon"></i>
+                <input class="field__input" type="password" id="registerConfirm" name="confirm" placeholder="••••••••" autocomplete="new-password" required>
+                <button type="button" class="field__toggle" aria-label="Show password" data-toggle-password>
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+              <span class="field__error">Passwords do not match</span>
+            </div>
+
+            <label class="checkbox checkbox--terms">
+              <input type="checkbox" name="terms" required>
+              <span class="checkbox__box"><i class="fa-solid fa-check"></i></span>
+              <span class="checkbox__label">I agree to the <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a></span>
+            </label>
+
+            <button type="submit" class="btn btn--primary">
+              <span class="btn__label">Create Account</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+            </button>
+
+            <div class="divider"><span>or continue with</span></div>
+
+            <div class="social-row">
+              <button type="button" class="social-btn" aria-label="Continue with Google"><i class="fa-brands fa-google"></i></button>
+              <button type="button" class="social-btn" aria-label="Continue with Apple"><i class="fa-brands fa-apple"></i></button>
+              <button type="button" class="social-btn" aria-label="Continue with Instagram"><i class="fa-brands fa-instagram"></i></button>
+            </div>
+
+            <p class="form-switch-text form-switch-text--mobile">
+              Already a member?
+              <button type="button" class="form-switch-link" data-switch="login">Sign in</button>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- ---------- SLIDING OVERLAY ---------- -->
+      <!-- This is the curved panel from the reference video,        -->
+      <!-- restyled in the gold/beige editorial palette. It slides   -->
+      <!-- left <-> right across the card, masking the inactive form -->
+      <!-- and presenting the call-to-action to switch modes.        -->
+      <div class="overlay" id="overlay">
+        <div class="overlay__grain"></div>
+        <div class="overlay__sheen"></div>
+        <div class="overlay__track">
+        <div class="overlay__pane overlay__pane--left" id="overlayToRegister">
+          <span class="overlay__kicker">New here?</span>
+          <h3 class="overlay__title">Hello,<br>Creative.</h3>
+          <p class="overlay__copy">Register to showcase your craft and connect with a continent of culture-bearers.</p>
+          <button type="button" class="btn btn--ghost" data-switch="register">
+            Create Account
+          </button>
+        </div>
+
+        <div class="overlay__pane overlay__pane--right" id="overlayToLogin">
+          <span class="overlay__kicker">Welcome back</span>
+          <h3 class="overlay__title">One of<br>Us, Already.</h3>
+          <p class="overlay__copy">Sign in to pick up your story right where you left it.</p>
+          <button type="button" class="btn btn--ghost" data-switch="login">
+            Sign In
+          </button>
+        </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- ============================================= -->
+<!-- SUCCESS TOAST                                   -->
+<!-- ============================================= -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <i class="fa-solid fa-circle-check toast__icon"></i>
+  <div class="toast__text">
+    <strong id="toastTitle">Welcome to Africulture</strong>
+    <span id="toastSubtitle">You're signed in.</span>
+  </div>
+</div>
+
+<script src="form.js"></script>
+</body>
+</html>
